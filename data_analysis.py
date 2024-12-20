@@ -17,12 +17,13 @@ columns_to_remove = ['Main ID', 'Incident ID', 'UNSD Geographical Grouping', 'UR
 data = data.drop(columns=columns_to_remove)
 
 # Columns renaming to suit visualisations
+
 columns_new_names = {
     'Region of Incident': 'Incident Region',
     'Date of Incident': 'Incident Date',
     'Year of Incident': 'Incident Year',
-    'Number of Dead': 'Deaths Count',
-    'Minimum Estimated Number of Missing': 'Minimum Missing Count',
+    'Number of Dead': 'Death Toll',
+    'Minimum Estimated Number of Missing': 'Estimated Missing Count',
     'Total Number of Dead and Missing': 'Total Missing and Dead',
     'Number of Survivors': 'Survivors Count',
     'Number of Females': 'Females Count',
@@ -36,6 +37,12 @@ columns_new_names = {
 
 # Applying column renaming
 data.rename(columns=columns_new_names, inplace=True)
+print(data.info())
 
-print(data.columns)
-print(data.shape)
+# Altering null data to 0 for death count
+
+print(data.isna().sum())
+
+data['Death Toll'].fillna(0, inplace=True)
+
+print(data.info())
